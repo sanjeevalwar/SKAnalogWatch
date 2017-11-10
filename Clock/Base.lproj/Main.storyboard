@@ -17,6 +17,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Analog Watch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aog-IW-jcz">
+                                <rect key="frame" x="68" y="135.5" width="238" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zdR-kF-H3V" customClass="SKAnalogWatch" customModule="Clock" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="233.5" width="375" height="200"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -27,7 +33,9 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Aog-IW-jcz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="I98-MU-N7W"/>
                             <constraint firstItem="zdR-kF-H3V" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Y5o-vD-Rpf"/>
+                            <constraint firstItem="zdR-kF-H3V" firstAttribute="top" secondItem="Aog-IW-jcz" secondAttribute="bottom" constant="50" id="oHV-hy-hUI"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zdR-kF-H3V" secondAttribute="trailing" id="tA6-aI-TOn"/>
                             <constraint firstItem="zdR-kF-H3V" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="w1L-W5-Rwp"/>
                         </constraints>

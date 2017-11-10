@@ -1,6 +1,6 @@
 //
 //  ClockTests.swift
-//  ClockTests
+//  ClockTests test
 //
 //  Created by Sanjeev Kumar on 31/10/17.
 //  Copyright © 2017 Sanjeev Kumar. All rights reserved.
