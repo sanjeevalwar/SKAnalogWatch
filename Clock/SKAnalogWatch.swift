@@ -1,6 +1,6 @@
 //
 //  SKAnalogWatch.swift
-//  Clock test1
+//  Clock
 //
 //  Created by Sanjeev Kumar on 09/11/17.
 //  Copyright © 2017 Sanjeev Kumar. All rights reserved.
@@ -9,15 +9,15 @@
 import UIKit
 
 class SKAnalogWatch: UIView {
-
-
+    
+    
     open var radius: CGFloat = 100.0
     open var fontSize: CGFloat = 16.0
-
     
-    public var dialBackgroundColor : CGColor = UIColor.white.cgColor
-    public var dialBorderColor: CGColor = UIColor.black.cgColor
-    public var watchDigitsColor: CGColor = UIColor.black.cgColor
+    
+    public var dialBackgroundColor : CGColor = UIColor.black.cgColor
+    public var dialBorderColor: CGColor = UIColor.red.cgColor
+    public var watchDigitsColor: CGColor = UIColor.white.cgColor
     
     private var WatchDialLayer  = CAShapeLayer()
     private var hourLayer       = CAShapeLayer()
@@ -42,8 +42,8 @@ class SKAnalogWatch: UIView {
         self.commonInit()
     }
     
-     override func draw(_ rect: CGRect) {
-//            self.commonInit()
+    override func draw(_ rect: CGRect) {
+        //            self.commonInit()
     }
     
     
@@ -52,6 +52,7 @@ class SKAnalogWatch: UIView {
         // Set the radius as per size of uiview
         radius = frame.size.width >= frame.size.height ? frame.size.height/2 : frame.size.width/2
         self.drawCircle()
+        self.drawTicks()
         
         let t = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(startAnimation), userInfo: nil, repeats: true)
         t.fire()
@@ -60,26 +61,30 @@ class SKAnalogWatch: UIView {
     //Mark:- Draw Circle
     
     func drawCircle(){
- 
+        
         let shapeLayerPath = UIBezierPath()
-        let circlePath = UIBezierPath(arcCenter: clockCenter, radius: self.radius, startAngle: 0, endAngle: 360, clockwise: true)
+        let circlePath = UIBezierPath(arcCenter: clockCenter, radius: self.radius + 5.0, startAngle: 0, endAngle: 360, clockwise: true)
+        WatchDialLayer.lineWidth = 5.0
         shapeLayerPath.append(circlePath)
+        
+        
+        
         
         // Draw Hours
         let hours = 12
         for i in 1 ... hours {
             print("Value of i is \(i)")
-
+            
             let txt = CATextLayer()
             let angle = CGFloat(i) * .pi * 2 / CGFloat(hours) - .pi/2
-
+            
             let x = round(cos(angle) * (radius - fontSize)) + clockCenter.x
             let y = round(sin(angle) * (radius - fontSize)) + clockCenter.y
-
+            
             txt.frame = CGRect(x: x - fontSize/2 , y: y - fontSize/2 , width: fontSize, height: fontSize)
             txt.foregroundColor = watchDigitsColor
             txt.string = "\(i)"
-            txt.fontSize = fontSize
+            txt.fontSize = fontSize - 2.0
             txt.alignmentMode = kCAAlignmentCenter
             WatchDialLayer.addSublayer(txt)
         }
@@ -90,7 +95,12 @@ class SKAnalogWatch: UIView {
         self.layer.addSublayer(WatchDialLayer)
         
         
-
+        //Draw Center circle
+        let centerCircleLayer = CAShapeLayer()
+        let centerCircle = UIBezierPath(arcCenter: clockCenter, radius: 5.0, startAngle: 0, endAngle: 360, clockwise: true)
+        centerCircleLayer.fillColor = UIColor.red.cgColor
+        centerCircleLayer.path = centerCircle.cgPath
+        self.layer.addSublayer(centerCircleLayer)
     }
     
     
@@ -125,14 +135,15 @@ class SKAnalogWatch: UIView {
         tmpBeizerPath.move(to: clockCenter)
         tmpBeizerPath.addLine(to: CGPoint(x: x, y: y))
         
-        layer.path = tmpBeizerPath.cgPath
-        layer.strokeColor = UIColor.black.cgColor
         
+        layer.path = tmpBeizerPath.cgPath
+        layer.strokeColor = UIColor.white.cgColor
+        layer.lineWidth = 2.0
         self.layer.addSublayer(layer)
     }
     
     
-    /*
+    
     func drawTicks(){
         
         // Draw Seconds
@@ -141,24 +152,26 @@ class SKAnalogWatch: UIView {
             let shapeLIneLayer = CAShapeLayer()
             let linePath = UIBezierPath()
             
-            let angle = Double(i) * M_PI * 2 / 60 - M_PI_2
+            let angle = CGFloat(i) * .pi * 2 / CGFloat(60) - .pi/2
             
-            let x = round(cos(angle) * Double(self.view.bounds.size.width/3) ) + Double(self.view.bounds.midX)
-            let y = round(sin(angle) * Double(self.view.bounds.size.width/3) ) + Double(self.view.bounds.midY)
+            let x = round(cos(angle) * (radius)) + clockCenter.x
+            let y = round(sin(angle) * (radius)) + clockCenter.y
             
-            let x1 = round(cos(angle) * Double(self.view.bounds.size.width/3 - 10.0) ) + Double(self.view.bounds.midX)
-            let y1 = round(sin(angle) * Double(self.view.bounds.size.width/3 - 10.0) ) + Double(self.view.bounds.midY)
             
+            
+            let x1 =  round(cos(angle) * (radius - fontSize/2 )) + clockCenter.x
+            let y1 = round(sin(angle) * (radius - fontSize/2 )) + clockCenter.y
             
             linePath.move(to: CGPoint(x: x, y: y))
             linePath.addLine(to: CGPoint(x: x1, y: y1))
             
-            shapeLIneLayer.strokeColor = (i % 5) == 0 ? UIColor.darkGray.cgColor : UIColor.black.cgColor
+            shapeLIneLayer.strokeColor = (i % 5) == 0 ? UIColor.red.cgColor : UIColor.white.cgColor
             shapeLIneLayer.path = linePath.cgPath
-            view.layer.addSublayer(shapeLIneLayer)
+            self.layer.addSublayer(shapeLIneLayer)
         }
         
     }
-    */
-
+    
+    
 }
+
